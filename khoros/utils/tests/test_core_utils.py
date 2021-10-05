@@ -26,6 +26,27 @@ def import_core_utils():
     return
 
 
+def test_decode_html_entities():
+    """This function tests the :py:func:`khoros.utils.core_utils.decode_html_entities` function."""
+    encoded_entities = "&lt;&apos;&amp;&gt;"
+    decoded_entities = "<'&>"
+    assert core_utils.decode_html_entities(encoded_entities) == decoded_entities
+
+
+def test_decode_binary():
+    """This function tests the :py:func:`khoros.utils.core_utils.decode_binary` function."""
+    b = b"string"
+    s = "string"
+    assert core_utils.decode_binary(b) == s
+
+
+def test_encode_decode_base64():
+    """This function tests the :py:func:`khoros.utils.core_utils.encode_base64` function."""
+    decoded = "string"
+    encoded = "c3RyaW5n"
+    assert core_utils.encode_base64(decoded) == encoded
+
+
 def test_url_encoding():
     """This function tests the :py:func:`khoros.utils.core_utils.url_encode` and
        :py:func:`khoros.utils.core_utils.url_decode` functions.
