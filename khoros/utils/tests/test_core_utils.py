@@ -40,7 +40,7 @@ def test_decode_binary():
     assert core_utils.decode_binary(b) == s
 
 
-def test_encode_decode_base64():
+def test_encode_base64():
     """This function tests the :py:func:`khoros.utils.core_utils.encode_base64` function."""
     decoded = "string"
     encoded = "c3RyaW5n"
