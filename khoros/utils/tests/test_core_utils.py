@@ -80,14 +80,6 @@ def test_get_file_type(tmp_path):
         core_utils.get_file_type(str(f))
 
 
-# def test_convert_string_to_tuple():
-#     """This function tests the :py:func:`khoros.utils.core_utils.convert_single_value_to_tuple` function."""
-#     single_string = "string"
-#     multi_value_string = "value1,value2"
-#     assert core_utils.convert_string_to_tuple(single_string) == (single_string,)
-#     assert core_utils.convert_string_to_tuple(multi_value_string, ",") == ("value1", "value2", )
-
-
 def test_url_encoding():
     """This function tests the :py:func:`khoros.utils.core_utils.url_encode` and
        :py:func:`khoros.utils.core_utils.url_decode` functions.
@@ -141,6 +133,13 @@ def test_extract_key_values_from_dict_list():
     d = {"key1": "value1", "key2": "value2"}
     assert core_utils.extract_key_values_from_dict_list("key1", d) == ["value1"]
     assert core_utils.extract_key_values_from_dict_list("dne", d) == []
+
+
+def test_convert_list_values():
+    """This function tests to the :py:func:`khoros.utils.core_utils.convert_list_values` function."""
+    _list = ["value1", "value2"]
+    assert core_utils.convert_list_values(_list) == ["value1", "value2"]
+    assert core_utils.convert_list_values(_list, "set") == [{"value1"}, {"value2"}]
 
 
 def test_merge_and_dedup():
