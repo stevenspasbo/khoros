@@ -11,6 +11,10 @@ import os
 import sys
 import importlib
 
+import pytest
+
+from khoros.errors.exceptions import UnknownFileTypeError
+
 
 def set_package_path():
     """This function adds the high-level khoros directory to the sys.path list."""
@@ -45,6 +49,35 @@ def test_encode_base64():
     decoded = "string"
     encoded = "c3RyaW5n"
     assert core_utils.encode_base64(decoded) == encoded
+
+
+def test_convert_single_value_to_tuple():
+    """This function tests the :py:func:`khoros.utils.core_utils.convert_single_value_to_tuple` function."""
+    value = "string"
+    assert core_utils.convert_single_value_to_tuple(value) == (value,)
+
+
+def test_is_iterable():
+    """This function tests the :py:func:`khoros.utils.core_utils.is_iterable` function."""
+    not_iterable = None
+    iterable = ["first", "second"]
+    assert core_utils.is_iterable(iterable)
+    assert not core_utils.is_iterable(not_iterable)
+
+
+def test_get_file_type(tmp_path):
+    """This function tests the :py:func:`khoros.utils.core_utils.get_file_type` function."""
+    for ext in ["yaml", "json"]:
+        f = tmp_path / f"file.{ext}"
+        f.write_text("")
+        assert core_utils.get_file_type(str(f)) == ext
+    with pytest.raises(FileNotFoundError):
+        core_utils.get_file_type(str(tmp_path / "randomfile.txt"))
+
+    with pytest.raises(UnknownFileTypeError):
+        f = tmp_path / f"file.fsdfdsfsdaf"
+        f.write_text("#! shebang\nSecond line")
+        core_utils.get_file_type(str(f))
 
 
 def test_url_encoding():
